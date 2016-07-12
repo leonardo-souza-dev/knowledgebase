@@ -1,0 +1,88 @@
+<!doctype html>
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html ng-app="scotchTodo">
+<head>
+    <!-- META -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+
+    <title>Node/Angular Todo App</title>
+
+    <!-- SCROLLS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
+    <style>
+        html       { overflow-y:scroll; }
+        body       { padding-top:10px; }
+        #todo-list { margin-bottom:10px; }
+    </style>
+
+    <!-- SPELLS -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script><!-- load angular -->
+    <script src="core.js"></script>
+
+</head>
+<!-- SET THE CONTROLLER AND GET ALL TODOS -->
+<body ng-controller="mainController">
+    <div class="container">
+
+        <!-- HEADER AND TODO COUNT -->
+        <div class="col-sm-12 text-center" style="background-color: blue">
+            <h4>WL Admin</h4>
+			<span class="label label-info">Total movies in db: {{ movies.length }}</span>
+        </div>
+
+        <!-- TODO LIST -->
+        <div id="todo-list" class="col-sm-12 text-center" style="background-color: yellow">
+            <h4>Movies list</h4>
+            <div class="checkbox" ng-repeat="movie in movies">
+                <label>
+                    <input type="checkbox" ng-click="deleteMovie(movie._id)"> {{ movie.name }}
+                </label>
+            </div>
+        </div>
+
+        <!-- CREATE MOVIE -->
+        <div id="todo-form" class="col-sm-12 text-center" style="background-color: orange">
+            <h4>Create movie</h4>
+            <form>
+                <div class="form-group">
+                    <input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.name">
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg" ng-click="createMovie()">Add</button>
+            </form>
+        </div>
+
+        <!-- SEARCH -->
+        <div class="col-sm-12 text-center" style="background-color: gray">
+            <h4>Search</h4>
+            <form>
+                <div class="form-group">
+                    <input type="text" class="form-control input-lg text-center" placeholder="search" ng-model="formData.searchterm">
+                    <input type="text" value="someData" ng-model="formData.token" />
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg" ng-click="searchMovie()">Search</button>
+            </form>
+            <!-- SEARCH RESULTS -->
+            <div id="todo-list" class="row">
+                <div class="col-sm-4 col-sm-offset-4">
+                    <div class="checkbox" ng-repeat="s in searchresult">
+                        {{ s.name }}
+                    </div>
+                </div>
+            </div>
+        </div>
+		
+		<!-- CREATE USER -->
+		<div class="col-sm-12 text-center" style="background-color: green">
+            <h4>Create user</h4>
+            <form>
+                <button type="submit" class="btn btn-primary btn-lg" ng-click="createUser()">Create user</button>
+            </form>
+			{{ setupresult.setupresult }}
+        </div>
+
+        
+    </div>
+</body>
+</html>

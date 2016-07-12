@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="en-US"> <![endif]-->
+<!--[if IE 7]>    <html class="lt-ie9 lt-ie8" lang="en-US"> <![endif]-->
+<!--[if IE 8]>    <html class="lt-ie9" lang="en-US"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en-US" ng-app="scotchTodo">
+	<head>
+		<!-- META TAGS -->
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Base de Conhecimento - Autopass</title>
+		<link rel="shortcut icon" href="images/favicon.png">
+
+		<!-- Google Web Fonts-->
+		<!-- temp
+		<link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+		<link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+		<link href="http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+		-->
+
+		<!-- Style Sheet-->
+		
+		<link rel="stylesheet" href="style.css">
+
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+
+		<link rel="stylesheet" id="responsive-css-css" href="css/responsive.css?ver=1.0" type="text/css" media="all">
+		<!-- temp
+		<link rel="stylesheet" id="pretty-photo-css-css" href="js/prettyphoto/prettyPhoto.css?ver=3.1.4" type="text/css" media="all">
+		-->
+		<link rel="stylesheet" id="main-css-css" href="css/main.css?ver=1.0" type="text/css" media="all">
+
+		<!-- SPELLS -->
+		<script src="/js/jquery-2.0.3.min.js"></script>
+		<script src="/js/angular-1.0.8/angular-1.0.8/angular.min.js"></script>
+		<script src="core.js"></script>
+
+		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+		<!--[if lt IE 9]>
+		<script src="js/html5.js"></script>
+		<![endif]-->
+	</head>
+<body ng-controller="mainController">
+	<!-- Start of Header -->
+	<div class="header-wrapper">
+		<header>
+			<div class="container">
+				<!-- Logo area -->
+				<div class="logo-container">
+					<a href="index.html" title="Knowledge Base Theme">
+						<img src="images/logo.png" alt="Knowledge Base Theme">
+					</a>
+					<span class="tag-line">Base de conhecimento</span>
+				</div>
+				<!-- Start of Main Navigation -->
+				<nav class="main-nav">
+					<div class="menu-top-menu-container">
+						<ul id="menu-top-menu" class="clearfix">
+							<li class="current-menu-item"><a href="index.html">Home</a></li>
+							<li><a href ng-click="goDogs = !goDogs">Novo artigo</a></li>
+							<li><a href  ng-click="goCats = !goCats">Adicionar sistema</a></li>
+							
+							<!--
+							<li><a href="articles-list.html">Articles List</a></li>
+							<li><a href="faq.html">FAQs</a></li>
+							<li><a href="#">Skins</a>javascript:;
+								<ul class="sub-menu">
+										<li><a href="blue-skin.html">Blue Skin</a></li>
+								-->
+						</ul>
+					</div>
+					<!--
+					<select class="responsive-nav">
+						<option value="" selected="">Go to...</option>
+						<option value="index.html"> Home</option>
+						<option value="home-categories-description.html"> Home 2</option>
+						<option value="home-categories-articles.html"> Home 3</option>
+						<option value="articles-list.html"> Articles List</option>
+						<option value="faq.html"> FAQs</option><option value="#"> Skins</option>
+						<option value="blue-skin.html"> -  Blue Skin</option><option value="green-skin.html"> -  Green Skin</option>
+						<option value="red-skin.html"> -  Red Skin</option><option value="index.html"> -  Default Skin</option>
+						<option value="#"> More</option><option value="full-width.html"> -  Full Width</option>
+						<option value="elements.html"> -  Elements</option><option value="page.html"> -  Sample Page</option>
+						<option value="contact.html"> Contact</option>
+					</select>
+					-->
+				</nav>
+				<!-- End of Main Navigation -->
+			</div>
+		</header>
+	</div>
+	<!-- End of Header -->
+
+	<!-- CRIAR SISTEMA -->
+	<div class="criar-sistema-wrapper" ng-show="goCats">
+		<div class="criar-sistema container">
+			<h4>Adicionar sistema</h4>
+			<ul ng-repeat="s in sistemas">
+				<li>{{s.nome}}</ul>
+			</ul>
+
+			<form id="search-form" class="search-form clearfix" >
+				<div class="form-group">
+					<input placeholder="nome do sistema" ng-model="sistema.nome" >
+				</div>
+				<input class="search-btn" type="submit" ng-click="adicionarSistema()" value="Adicionar sistema!">
+				<div id="search-error-container" ng-model="sistema.resultadocriacao" >{{sistema.resultadocriacao}}</div>
+			</form>
+		</div>
+	</div>
+	<!-- End of Search Wrapper -->
+
+	<!-- Start of Search Wrapper -->
+	<div class="search-area-wrapper" ng-show="!goDogs">
+		<div class="search-area container">
+			<h3 class="search-header">Autopass</h3>
+			<p class="search-tag-line">Base de conhecimento</p>
+
+			<form id="search-form" class="search-form clearfix" method="get" action="#" autocomplete="off" novalidate="novalidate">
+				<div class="form-group col-md-9">
+					<input class="form-control " type="text" placeholder="Busque um artigo" autocomplete="on">
+				</div>
+				<div class="form-group left" >
+					<button type="button" class="btn btn-primary" ng-click="gravarArtigo()">Buscar</button>
+				</div>
+				<div id="search-error-container"></div>
+			</form>
+		</div>
+	</div>
+	<!-- End of Search Wrapper -->	
+
+	<!-- Start of Page Container EDICAO/ NOVO ARTIGO -->
+	<div class="page-container" ng-show="goDogs">
+		<div class="container">
+			<!-- <div class="row"> -->
+
+				<!-- start of page content -->
+				<div class="bs-example" data-example-id="basic-forms">
+					<ul class="breadcrumb" style="display:none;">
+						<li><a href="#">Knowledge Base Theme</a><span class="divider" style="display:none;">/</span></li>
+						<li><a href="#" title="View all posts in Server &amp; Database">Server &amp; Database</a></li>
+						<li class="active">Integrating WordPress with Your Website</li>
+					</ul>
+
+					<form action="#" method="post" id="novoartigo">
+						<div class="form-group">
+							<label for="sistemas" style="display:block;">Sistema</label>
+							<select id="sistemas" name="sistemas" class="form-control" ng-model="artigo.sistema" >
+								<option value="sistema">--Escolha o sistema--</option>
+								<option ng-repeat="s in sistemas" ng-value="{{s.nome}}">{{s.nome}}</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="titulo" style="display:block;">Título do artigo</label>
+							<input class="form-control" type="text" ng-model="artigo.titulo" size="22">
+						</div>
+						<div class="form-group">
+							<label for="corpo" style="display:block;">Corpo</label>
+							<textarea class="form-control" rows="10" cols="50" ng-model="artigo.corpo"></textarea>
+						</div>
+						
+						<button type="button" class="btn btn-default" ng-click="goDogs = !goDogs">Cancelar</button>
+						<button type="button" class="btn btn-primary" ng-click="gravarOuAtualizarArtigo(artigo)">Grava novo artigo</button>
+					</form>
+
+					<div class="post-meta clearfix" style="display:none;">
+						<span class="date"></span>
+						<span class="category"><a href="#" title="View all posts in Server &amp; Database">Server &amp; Database</a></span>
+						<span class="comments"><a href="#" title="Comment on Integrating WordPress with Your Website">3 Comments</a></span>
+						<span class="like-count">66</span>
+					</div><!-- end of post meta -->
+
+					<div class="like-btn">
+						<form id="like-it-form" action="#" method="post" style="display:none;">
+							<span class="like-it ">66</span>
+							<input type="hidden" name="post_id" value="99">
+							<input type="hidden" name="action" value="like_it">
+						</form>
+
+						<span class="tags" style="display:none;">
+							<strong>Tags:&nbsp;&nbsp;</strong><a href="#" rel="tag">basic</a>, <a href="#" rel="tag">setting</a>, <a href="http://knowledgebase.inspirythemes.com/tag/website/" rel="tag">website</a>
+						</span>
+					</div>
+
+					<section id="comments"  style="display:none;">
+						<h3 id="comments-title">(3) Comments</h3>
+
+						<ol class="commentlist">
+							<li class="comment even thread-even depth-1" id="li-comment-2">
+								<article id="comment-2">
+									<a href="#">
+										<img alt="" src="images/avatar.png" class="avatar avatar-60 photo" height="60" width="60">
+									</a>
+
+									<div class="comment-meta">
+										<h5 class="author">
+											<cite class="fn">
+												<a href="#" rel="external nofollow" class="url">John Doe</a>
+											</cite>
+											- <a class="comment-reply-link" href="#">Reply</a>
+										</h5>
+
+										<p class="date">
+											<a href="#">
+												<time datetime="2013-02-26T13:18:47+00:00">February 26, 2013 at 1:18 pm</time>
+											</a>
+										</p>
+									</div><!-- end .comment-meta -->
+
+									<div class="comment-body">
+										<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
+										<p>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem.</p>
+									</div><!-- end of comment-body -->
+								</article><!-- end of comment -->
+
+								<ul class="children">
+									<li class="comment byuser comment-author-saqib-sarwar bypostauthor odd alt depth-2" id="li-comment-3">
+										<article id="comment-3">
+											<a href="">
+												<img alt="" src="images/avatar.png" class="avatar avatar-60 photo" height="60" width="60">
+											</a>
+
+											<div class="comment-meta">
+
+												<h5 class="author">
+													<cite class="fn">saqib sarwar</cite>
+													- <a class="comment-reply-link" href="#">Reply</a>
+												</h5>
+
+												<p class="date">
+													<a href="#">
+														<time datetime="2013-02-26T13:20:14+00:00">February 26, 2013 at 1:20 pm</time>
+													</a>
+												</p>
+
+											</div><!-- end .comment-meta -->
+
+											<div class="comment-body">
+												<p>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.</p>
+											</div><!-- end of comment-body -->
+
+										</article><!-- end of comment -->
+									</li>
+								</ul>
+							</li>
+
+							<li class="comment even thread-odd thread-alt depth-1" id="li-comment-4">
+								<article id="comment-4">
+									<a href="#">
+										<img alt="" src="images/avatar.png" class="avatar avatar-60 photo" height="60" width="60">
+									</a>
+
+									<div class="comment-meta">
+										<h5 class="author">
+											<cite class="fn"><a href="#" rel="external nofollow" class="url">John Doe</a></cite>
+											- <a class="comment-reply-link" href="#">Reply</a>
+										</h5>
+
+										<p class="date">
+											<a href="http://knowledgebase.inspirythemes.com/integrating-wordpress-with-your-website/#comment-4">
+												<time datetime="2013-02-26T13:27:04+00:00">February 26, 2013 at 1:27 pm</time>
+											</a>
+										</p>
+									</div><!-- end .comment-meta -->
+
+									<div class="comment-body">
+										<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. </p>
+										<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.</p>
+									</div><!-- end of comment-body -->
+								</article><!-- end of comment -->
+							</li>
+						</ol>
+
+						<div id="respond">
+							<h3>Leave a Reply</h3>
+
+							<div class="cancel-comment-reply">
+								<a rel="nofollow" id="cancel-comment-reply-link" href="#" style="display:none;">Click here to cancel reply.</a>
+							</div>
+
+							<form action="#" method="post" id="commentform">
+								<p class="comment-notes">Your email address will not be published. Required fields are marked <span class="required">*</span></p>
+
+								<div>
+									<label for="author">Name *</label>
+									<input class="span4" type="text" name="author" id="author" value="" size="22">
+								</div>
+
+								<div>
+									<label for="email">Email *</label>
+									<input class="span4" type="text" name="email" id="email" value="" size="22" >
+								</div>
+
+								<div>
+									<label for="url">Website</label>
+									<input class="span4" type="text" name="url" id="url" value="" size="22" >
+								</div>
+
+								<div>
+									<label for="comment">Comment</label>
+									<textarea class="span8" name="comment" id="comment" cols="58" rows="10"></textarea>
+								</div>
+
+								<p class="allowed-tags">You can use these HTML tags and attributes <small><code>&lt;a href="" title=""&gt; &lt;abbr title=""&gt; &lt;acronym title=""&gt; &lt;b&gt; &lt;blockquote cite=""&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=""&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=""&gt; &lt;strike&gt; &lt;strong&gt; </code></small></p>
+
+								<div>
+									<input class="btn" name="submit" type="submit" id="submit"  value="Submit Comment">
+								</div>
+							</form>
+						</div>
+					</section><!-- end of comments -->
+				</div>
+				<!-- end of page content -->
+
+				<!-- start of sidebar -->
+				<aside class="span4 page-sidebar"  style="display:none;">
+					<section class="widget">
+						<div class="support-widget">
+							<h3 class="title">Support</h3>
+							<p class="intro">Need more support? If you did not found an answer, contact us for further help.</p>
+						</div>
+					</section>
+					<section class="widget">
+						<h3 class="title">Featured Articles</h3>
+						<ul class="articles">
+							<li class="article-entry standard">
+								<h4><a href="single.html">Integrating WordPress with Your Website</a></h4>
+								<span class="article-meta">25 Feb, 2013 in <a href="#" title="View all posts in Server &amp; Database">Server &amp; Database</a></span>
+								<span class="like-count">66</span>
+							</li>
+							<li class="article-entry standard">
+								<h4><a href="single.html">WordPress Site Maintenance</a></h4>
+								<span class="article-meta">24 Feb, 2013 in <a href="#" title="View all posts in Website Dev">Website Dev</a></span>
+								<span class="like-count">15</span>
+							</li>
+							<li class="article-entry video">
+								<h4><a href="single.html">Meta Tags in WordPress</a></h4>
+								<span class="article-meta">23 Feb, 2013 in <a href="#" title="View all posts in Website Dev">Website Dev</a></span>
+								<span class="like-count">8</span>
+							</li>
+							<li class="article-entry image">
+								<h4><a href="single.html">WordPress in Your Language</a></h4>
+								<span class="article-meta">22 Feb, 2013 in <a href="#" title="View all posts in Advanced Techniques">Advanced Techniques</a></span>
+								<span class="like-count">6</span>
+							</li>
+						</ul>
+					</section>
+
+					<section class="widget"><h3 class="title">Categories</h3>
+						<ul>
+							<li><a href="#" title="Lorem ipsum dolor sit">Advanced Techniques</a> </li>
+							<li><a href="#" title="Lorem ipsum dolor sit">Designing in WordPress</a></li>
+							<li><a href="#" title="Lorem ipsum dolor sit">Server &amp; Database</a></li>
+							<li><a href="#" title="Lorem ipsum dolor sit">Theme Development</a></li>
+							<li><a href="#" title="Lorem ipsum dolor sit">Website Dev</a></li>
+							<li><a href="#" title="Lorem ipsum dolor sit">WordPress for Beginners</a></li>
+							<li><a href="#" title="Lorem ipsum dolor sit">WordPress Plugins</a></li>
+						</ul>
+					</section>
+
+					<section class="widget">
+						<h3 class="title">Recent Comments</h3>
+						<ul id="recentcomments">
+							<li class="recentcomments"><a href="#" rel="external nofollow" class="url">John Doe</a> on <a href="#">Integrating WordPress with Your Website</a></li>
+							<li class="recentcomments">saqib sarwar on <a href="#">Integrating WordPress with Your Website</a></li>
+							<li class="recentcomments"><a href="#" rel="external nofollow" class="url">John Doe</a> on <a href="#">Integrating WordPress with Your Website</a></li>
+							<li class="recentcomments"><a href="#" rel="external nofollow" class="url">Mr WordPress</a> on <a href="#">Installing WordPress</a></li>
+						</ul>
+					</section>
+
+				</aside>
+				<!-- end of sidebar -->
+			<!-- </div> -->
+		</div>
+	</div>
+	<!-- End of Page Container -->
+
+	<!-- Start of Page Container -->
+	<div class="page-container" ng-show="!goDogs">
+		<div class="container">
+			<div class="row">
+				<div class="span8 page-content">
+					<div class="row separator">
+						<section class="span4 articles-list" style="display:none;">
+							<h3>Artigos mais acessados</h3>
+							<ul class="articles" ng-repeat="art in artigos">
+								<li class="article-entry standard">
+									<h4><a href="single.html">{{art.titulo}}</a></h4>
+									<span class="article-meta">{{art.data}} in <a href="#" title="View all posts in Server &amp; Database">{{art.sistema}}</a></span>
+									<span class="like-count">66</span>
+								</li>
+							</ul>
+						</section>
+						
+						<section class="span4 articles-list">
+							<h3>Últimos artigos</h3>
+							<ul class="articles" ng-repeat="uart in uartigos">
+								<li class="article-entry standard">
+									<h4><a href="#" ng-click="editarArtigo(uart)">{{uart.titulo}} - {{uart._id}}</a></h4>
+									<span class="article-meta">{{uart.data}} in <a href="#" title="View all posts in Server &amp; Database">{{uart.sistema}}</a></span>
+									<span class="like-count">66</span>
+								</li>
+							</ul>
+						</section>
+					</div>
+				</div>
+				<!-- end of page content -->
+
+				<!-- start of sidebar -->
+				<aside class="span4 page-sidebar" style="display:none;">
+					<section class="widget">
+						<div class="support-widget">
+							<h3 class="title">Support</h3>
+							<p class="intro">Need more support? If you did not found an answer, contact us for further help.</p>
+						</div>
+					</section>
+
+					<section class="widget">
+						<div class="quick-links-widget">
+							<h3 class="title">Quick Links</h3>
+							<ul id="menu-quick-links" class="menu clearfix">
+								<li><a href="index.html">Home</a></li>
+								<li><a href="articles-list.html">Articles List</a></li>
+								<li><a href="faq.html">FAQs</a></li>
+								<li><a href="contact.html">Contact</a></li>
+							</ul>
+						</div>
+					</section>
+
+					<section class="widget">
+						<h3 class="title">Tags</h3>
+						<div class="tagcloud">
+							<a href="#" class="btn btn-mini">basic</a>
+							<a href="#" class="btn btn-mini">beginner</a>
+							<a href="#" class="btn btn-mini">blogging</a>
+							<a href="#" class="btn btn-mini">colour</a>
+							<a href="#" class="btn btn-mini">css</a>
+							<a href="#" class="btn btn-mini">date</a>
+							<a href="#" class="btn btn-mini">design</a>
+							<a href="#" class="btn btn-mini">files</a>
+							<a href="#" class="btn btn-mini">format</a>
+							<a href="#" class="btn btn-mini">header</a>
+							<a href="#" class="btn btn-mini">images</a>
+							<a href="#" class="btn btn-mini">plugins</a>
+							<a href="#" class="btn btn-mini">setting</a>
+							<a href="#" class="btn btn-mini">templates</a>
+							<a href="#" class="btn btn-mini">theme</a>
+							<a href="#" class="btn btn-mini">time</a>
+							<a href="#" class="btn btn-mini">videos</a>
+							<a href="#" class="btn btn-mini">website</a>
+							<a href="#" class="btn btn-mini">wordpress</a>
+						</div>
+					</section>
+
+				</aside>
+				<!-- end of sidebar -->
+			</div>
+		</div>
+	</div>
+	<!-- End of Page Container -->
+
+	<!-- Start of Footer -->
+	<footer id="footer-wrapper">
+		<div id="footer" class="container">
+				<div class="row">
+
+						<div class="span3">
+							<section class="widget">
+								<h3 class="title">How it works</h3>
+								<div class="textwidget">
+									<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. </p>
+									<p>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. </p>
+								</div>
+							</section>
+						</div>
+
+						<div class="span3">
+							<section class="widget"><h3 class="title">Categories</h3>
+								<ul>
+									<li><a href="#" title="Lorem ipsum dolor sit amet,">Advanced Techniques</a> </li>
+									<li><a href="#" title="Lorem ipsum dolor sit amet,">Designing in WordPress</a></li>
+									<li><a href="#" title="Lorem ipsum dolor sit amet,">Server &amp; Database</a></li>
+									<li><a href="#" title="Lorem ipsum dolor sit amet, ">Theme Development</a></li>
+									<li><a href="#" title="Lorem ipsum dolor sit amet,">Website Dev</a></li>
+									<li><a href="#" title="Lorem ipsum dolor sit amet,">WordPress for Beginners</a></li>
+									<li><a href="#" title="Lorem ipsum dolor sit amet, ">WordPress Plugins</a></li>
+								</ul>
+							</section>
+						</div>
+
+						<!--
+						<div class="span3">
+								<section class="widget">
+										<h3 class="title">Latest Tweets</h3>
+										<div id="twitter_update_list"><ul></ul></div>
+										<script src="http://twitterjs.googlecode.com/svn/trunk/src/twitter.min.js" type="text/javascript"></script>
+										<script type="text/javascript">
+												getTwitters("twitter_update_list", {
+														id: "960development",
+														count: 3,
+														enableLinks: true,
+														ignoreReplies: true,
+														clearContents: true,
+														template: "%text% <span>%time%</span>"
+												});
+										</script>
+								</section>
+						</div>
+						-->
+
+					<div class="span3">
+						<section class="widget">
+							<h3 class="title">Flickr Photos</h3>
+							<div class="flickr-photos" id="basicuse">
+								<a href="#" title="Hale" data-rel="prettyPhoto[flickrg]" rel="prettyPhoto[flickrg]"><img src="images/temp/man.png" alt="Hae"></a>
+								<a href="#" title="Hale" data-rel="prettyPhoto[flickrg]" rel="prettyPhoto[flickrg]"><img src="images/temp/man.png" alt="Hae"></a>
+								<a href="#" title="Hale" data-rel="prettyPhoto[flickrg]" rel="prettyPhoto[flickrg]"><img src="images/temp/man.png" alt="Hae"></a>
+								<a href="#" title="Hale" data-rel="prettyPhoto[flickrg]" rel="prettyPhoto[flickrg]"><img src="images/temp/man.png" alt="Hae"></a>
+								<a href="#" title="Hale" data-rel="prettyPhoto[flickrg]" rel="prettyPhoto[flickrg]"><img src="images/temp/man.png" alt="Hae"></a>
+								<a href="#" title="Hale" data-rel="prettyPhoto[flickrg]" rel="prettyPhoto[flickrg]"><img src="images/temp/man.png" alt="Hae"></a>
+								<a href="#" title="Hale" data-rel="prettyPhoto[flickrg]" rel="prettyPhoto[flickrg]"><img src="images/temp/man.png" alt="Hae"></a>
+								<a href="#" title="Hale" data-rel="prettyPhoto[flickrg]" rel="prettyPhoto[flickrg]"><img src="images/temp/man.png" alt="Hae"></a>
+								<a href="#" title="Hale" data-rel="prettyPhoto[flickrg]" rel="prettyPhoto[flickrg]"><img src="images/temp/man.png" alt="Hae"></a>
+							</div>
+						</section>
+					</div>
+
+				</div>
+		</div>
+		<!-- end of #footer -->
+
+		<!-- Footer Bottom -->
+		<div id="footer-bottom-wrapper">
+			<div id="footer-bottom" class="container">
+				<div class="row">
+					<div class="span6">
+						<p class="copyright">
+							Copyright © 2013. All Rights Reserved by KnowledgeBase.
+						</p>
+					</div>
+					<div class="span6">
+						<!-- Social Navigation -->
+						<ul class="social-nav clearfix">
+							<li class="linkedin"><a target="_blank" href="#"></a></li>
+							<li class="stumble"><a target="_blank" href="#"></a></li>
+							<li class="google"><a target="_blank" href="#"></a></li>
+							<li class="deviantart"><a target="_blank" href="#"></a></li>
+							<li class="flickr"><a target="_blank" href="#"></a></li>
+							<li class="skype"><a target="_blank" href="skype:#?call"></a></li>
+							<li class="rss"><a target="_blank" href="#"></a></li>
+							<li class="twitter"><a target="_blank" href="#"></a></li>
+							<li class="facebook"><a target="_blank" href="#"></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End of Footer Bottom -->
+
+	</footer>
+	<!-- End of Footer -->
+
+	<a href="#top" id="scroll-top"></a>
+
+	<!-- script -->
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+	<script type="text/javascript" src="js/prettyphoto/jquery.prettyPhoto.js"></script>
+	<script type="text/javascript" src="js/jflickrfeed.js"></script>
+	<script type="text/javascript" src="js/jquery.liveSearch.js"></script>
+	<script type="text/javascript" src="js/jquery.form.js"></script>
+	<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+	<!-- <script type="text/javascript" src="js/jquery-twitterFetcher.js"></script> 
+	<script type="text/javascript" src="js/custom.js"></script> -->
+        
+	<div id="jquery-live-search" style="display: none;"></div>
+	
+	
+	<!-- 
+	<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js"></script>
+	<script>
+		// Initialize Firebase
+		var config = {
+			apiKey: "AIzaSyD0sD5J4D9iwDtPg8pYMDkCiSVWMnwgazs",
+			authDomain: "meuprojetoincrivel-496d3.firebaseapp.com",
+			databaseURL: "https://meuprojetoincrivel-496d3.firebaseio.com",
+			storageBucket: "meuprojetoincrivel-496d3.appspot.com",
+		};
+		firebase.initializeApp(config);
+	</script>
+	-->
+    
+</body>
+</html>
