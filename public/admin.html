@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="en-US"> <![endif]-->
+<!--[if IE 7]>    <html class="lt-ie9 lt-ie8" lang="en-US"> <![endif]-->
+<!--[if IE 8]>    <html class="lt-ie9" lang="en-US"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en-US" ng-app="kbadmin">
+	<head>
+		<!-- META TAGS -->
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Base de Conhecimento - Admin</title>
+		<link rel="shortcut icon" href="images/favicon.png">
+		<!-- Google Web Fonts-->		
+		<link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+		<link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+		<link href="http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+		<!-- Style Sheet-->		
+		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" id="responsive-css-css" href="css/responsive.css?ver=1.0" type="text/css" media="all">
+		<link rel="stylesheet" id="pretty-photo-css-css" href="js/prettyphoto/prettyPhoto.css?ver=3.1.4" type="text/css" media="all">
+		<link rel="stylesheet" id="main-css-css" href="css/main.css?ver=1.0" type="text/css" media="all">
+		<!-- SPELLS -->
+		<script src="/js/jquery-2.0.3.min.js"></script>
+		<script src="/js/angular-1.0.8/angular-1.0.8/angular.min.js"></script>
+		<script src="core_admin.js"></script>
+
+		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+		<!--[if lt IE 9]>
+		<script src="js/html5.js"></script>
+		<![endif]-->
+	</head>
+<body ng-controller="principalController">
+	<div class="page-container">
+		<!-- HEADER -->
+		<div class="header-wrapper">
+			<header>
+				<div class="container">
+
+					<!-- Logo area -->
+					<div class="logo-container">
+						<a href="index.html" title="Knowledge Base Theme">
+							<img src="images/logo.png" alt="Knowledge Base Theme">
+						</a>
+						<span class="tag-line">Base de conhecimento</span>
+					</div>
+
+					<!-- Start of Main Navigation -->
+					<nav class="main-nav">
+						<div class="menu-top-menu-container">
+							<ul id="menu-top-menu" class="clearfix">
+								<li class="current-menu-item"><a href="index.html">Home</a></li>
+								<li><a href>Parâmetros de sistema</a></li>
+							</ul>
+						</div>
+					</nav>
+					<!-- End of Main Navigation -->
+				</div>
+			</header>
+		</div>
+		<!-- HEADER FIM-->
+
+		<!-- CRIAR PARAMETRO -->
+		<div class="container">
+			<h3>Adicionar parâmetro</h3>
+			<form action="#" method="post" id="novoparametro" >
+				<div class="row">
+					<div class="form-group col-md-3">
+						<label for="chave">Chave</label>
+						<input type="text" placeholder="chave" id="chave" class="form-control col-md-3" ng-model="parametro.chave" >
+					</div>
+
+					<div class="form-group col-md-3">
+						<label for="valor">Valor</label>
+						<input type="text" placeholder="valor" id="valor" class="form-control col-md-3" ng-model="parametro.valor" >
+					</div>
+				</div>
+				
+				<div class="row">
+					<button type="button" class="btn btn-primary" ng-click="adicionarParametro()">Adicionar parâmetro!</button>
+				</div>
+
+				<div id="search-error-container" ng-model="parametro.resultadocriacao" >{{parametro.resultadocriacao}}</div>
+			</form>
+
+			<div class="criar-sistema">
+				<h3>Parâmetros</h3>
+				<ul class="list-group" ng-repeat="p in parametros">
+					<li class="list=group-item">{{p.chave}} - {{p.valor}}</ul>
+				</ul>
+			</div>
+		</div>
+		<!-- CRIAR PARAMETRO FIM -->
+
+		<!-- Start of Footer -->
+		<footer id="footer-wrapper">
+			<div id="footer-bottom-wrapper">
+				<div id="footer-bottom" class="container">
+					<div class="row">
+						<div class="span6">
+							<p class="copyright">
+								Copyright © 2013. All Rights Reserved by KnowledgeBase.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<!-- End of Footer -->
+
+		<a href="#top" id="scroll-top"></a>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+		<script type="text/javascript" src="js/prettyphoto/jquery.prettyPhoto.js"></script>
+		<script type="text/javascript" src="js/jflickrfeed.js"></script>
+		<script type="text/javascript" src="js/jquery.liveSearch.js"></script>
+		<script type="text/javascript" src="js/jquery.form.js"></script>
+		<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+		<div id="jquery-live-search" style="display: none;"></div>
+	</div>
+</body>
+</html>

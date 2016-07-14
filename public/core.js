@@ -26,6 +26,22 @@ function mainController($scope, $http) {
 		}).error(function(data){
 			console.log(data);
 		});
+
+    c('iniciando');
+
+    $http.post('/api/obterparametro', 'nomelogo')
+        .success(function(data){
+            $scope.nomelogo = data.objeto.nomelogo;
+        }).error(function(data){
+            console.log(data);
+        });
+
+    $http.post('/api/obterparametro', 'nomecia')
+        .success(function(data){
+            $scope.nomecia = data.objeto.nomecia;
+        }).error(function(data){
+            console.log(data);
+        });
 	
 	//mock
 	$scope.artigos = [{titulo: 'I-ntegrating WordPress with Your Website', data: '25 Feb, 2013', sistema: 'SAG'},

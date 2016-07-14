@@ -25,7 +25,10 @@
     var Artigo = mongoose.model('Artigo', {
         sistema: String, titulo: String, corpo: String, data_criacao: Date, 
 		data_atualizacao: Date, id: ObjectId
-    });	
+    });
+    var Parametro = mongoose.model('Parametro', {
+    	chave: String, valor: String
+    });
 
 	function generateUUID() {
 	    var d = new Date().getTime();
@@ -61,9 +64,9 @@
 		var condicao = { _id: req.body._id }, options = { multi: true };
 		
 		Artigo.findOne(condicao, '_id', function (err, doc) {
-			if (err) return handleError(err);
+			if (err) return res.send(err);
 
-			if (doc._id != null) {
+			if (doc != null && doc._id != null) {
 				
 				Artigo.update(condicao, { 
 				sistema: req.body.sistema,
@@ -120,10 +123,49 @@
 		}).limit(50).sort({'data_criacao': 'desc'});
     });
 
-    // application -------------------------------------------------------------
-    app.get('*', function(req, res) {
-        res.sendFile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
+
+    app.post('/api/adicionarparametro', function(req, res) {
+		Parametro.create({ 
+				chave: req.body.chave,
+				valor: req.body.valor
+			}, function(err, data) {
+				if (err) res.send(err);
+				
+				//console.log('Novo parâmetro CRIADO! Titulo: ' + req.body.titulo);
+				res.json({ sucesso: true, mensagem: "Parâmetro criado!", objeto: { parametro: data } });
+			});
     });
+
+
+
+    app.post('/api/obterparametro', function(req, res) {
+		Parametro.findOne({'chave': req.body.chave }, 'valor', function(err, data) {
+			if (err) res.send(err);
+			
+			res.json({ sucesso: true, mensagem: "Parametro obtido!", objeto: { parametro: data } });
+		})
+    	//res.json({ sucesso: true, mensagem: "Itens comuns obtidos!", objeto: { nomecia: 'Autopass', nomelogo: 'logo.png' } });
+    });
+
+    app.get('/api/obterparametros', function(req, res) {
+		Parametro.find(function(err, data) {
+			if (err) res.send(err); 
+
+			res.json({ sucesso: true, mensagem: "Parametros obtidos!", objeto: { parametros: data } });
+		})
+    });
+
+
+    // application -------------------------------------------------------------
+
+    app.get('/admin', function(req, res) {
+        res.sendFile(__dirname + '/public/admin.html');
+    });
+
+    app.get('*', function(req, res) {
+        res.sendFile(__dirname + '/public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
+    });
+
 
     // listen (start app with node server.js) ======================================
     app.listen(8080);
