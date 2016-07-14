@@ -537,6 +537,7 @@ ul.articles .article-entry {
 }
 ul.articles .article-entry.standard {
   background: url("../images/standard.png") no-repeat 0 3px;
+  cursor: pointer;
 }
 ul.articles .article-entry.video {
   background: url("../images/video.png") no-repeat 0 3px;

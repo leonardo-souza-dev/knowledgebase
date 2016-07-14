@@ -10,7 +10,7 @@ function c(text) {
 function lObterUltimosArtigos($http, $scope) {
 	return $http.get('/api/obterultimosartigos')
 			.success(function(data){
-				$scope.uartigos = data.objeto.artigos;			
+				$scope.uartigos = data.objeto.artigos;
 			}).error(function(data){
 				console.log(data);
 			});	
@@ -22,7 +22,7 @@ function mainController($scope, $http) {
 	
 	$http.get('/api/obtersistemas')
 		.success(function(data){
-			$scope.sistemas = data.objeto.sistemas;			
+			$scope.sistemas = data.objeto.sistemas;
 		}).error(function(data){
 			console.log(data);
 		});
@@ -34,7 +34,7 @@ function mainController($scope, $http) {
 					{titulo: 'W-ordPress in Your Language', data: '25 Feb, 2016', sistema: 'SAG'}];
 	//mock
 	$scope.uartigos = function() {
-		lObterUltimosArtigos();					
+		lObterUltimosArtigos();
 	};
 	
     $scope.sistema = {};
@@ -50,24 +50,53 @@ function mainController($scope, $http) {
                 console.log('Error: ' + data.mensagem);
             });
     };
-	
-	$scope.gravarOuAtualizarArtigo = function(pArtigo) {
-		
-		$http.post('/api/gravarouatualizarartigo', pArtigo)
-			.success(function(data){
+    
+    $scope.gravarOuAtualizarArtigo = function(pArtigo) {
+        
+        $http.post('/api/gravarouatualizarartigo', pArtigo)
+            .success(function(data) {
                 $scope.artigo = {};
                 c(data.mensagem); //TODO:trocar por algo tipo 'Toast' do Android
-				
-				// if (data.objeto.foiInsert) {
-					// $scope.uartigos.push(data.objeto.artigo); //atualiza 'Últimos Artigos' com novo artigo adicionado
-					// $scope.uartigos.reverse();
-				// }
-				lObterUltimosArtigos($http, $scope);
-				$scope.goDogs = !$scope.goDogs;
-			}).error(function(data){
-                console.log(data);				
-			});
-	}
+                
+                // if (data.objeto.foiInsert) {
+                    // $scope.uartigos.push(data.objeto.artigo); //atualiza 'Últimos Artigos' com novo artigo adicionado
+                    // $scope.uartigos.reverse();
+                // }
+                lObterUltimosArtigos($http, $scope);
+                $scope.goDogs = !$scope.goDogs;
+            }).error(function(data){
+                console.log(data);
+            });
+    }
+    
+    $scope.apagarArtigo = function(pArtigo) {
+        
+        //console.log($scope.uartigos.length);
+        //console.log($scope.uartigos);
+
+        var asd = $scope.uartigos;
+
+        for (var i = 0; i < asd.length; i++) {
+            console.log('asd[i]');
+            console.log(asd[i]._id);
+        };
+
+        $http.post('/api/apagarartigo', pArtigo)
+            .success(function(data){
+                $scope.artigo = {};
+                c(data.mensagem); //TODO:trocar por algo tipo 'Toast' do Android
+                
+                // if (data.objeto.foiInsert) {
+                    // $scope.uartigos.push(data.objeto.artigo); //atualiza 'Últimos Artigos' com novo artigo adicionado
+                    // $scope.uartigos.reverse();
+                // }
+                
+                lObterUltimosArtigos($http, $scope);
+                $scope.goDogs = !$scope.goDogs;
+            }).error(function(data){
+                console.log(data);
+            });s
+    }
 	
 	$scope.editarArtigo = function(art) {
 		$scope.goDogs = !$scope.goDogs;
