@@ -68,9 +68,45 @@ function principalController($scope, $http) {
                 console.log(data);
             });s
     }
-	
-	$scope.editarParametro = function(art) {
-		$scope.goDogs = !$scope.goDogs;
-		$scope.artigo = { sistema: art.sistema, titulo: art.titulo, corpo: art.corpo, _id: art._id };
-	}
+    
+    $scope.editarParametro = function(pParametro) {
+
+        alert('bbb');
+        if (!clicouEditar) {
+            $scope.soleitura = !$scope.soleitura;
+            clicouEditar = true;
+        }
+        $scope.estilotravado = $scope.estilodestravado;
+        //console.log(pParametro);
+        //$scope.showEdits = !$scope.showEdits;
+        //$scope.editParametro.chave = 'chavera';//pParametro.chave;
+        //$scope.editParametro.valor = 'valore';pParametro.valor;
+        //$scope.artigo = { sistema: pParametro.sistema, titulo: art.titulo, corpo: art.corpo, _id: art._id };
+    }
+    
+    $scope.saiu = function() {
+        alert('aaa');
+        $scope.estilotravado = $scope.estilotravadoBkp;
+    }
+
+    var clicouEditar = false;
+    
+    $scope.estilotravado = estiloLock;
+    
+    var estiloLock = {
+        'width':'50px',
+        'display':'inline',
+        'border':'0px solid #ccc',
+        '-webkit-box-shadow': 'inset 0 0px 0px rgba(0,0,0,0)',
+        'cursor':'initial',
+        'background-color':'#FFFFFF'};
+
+    $scope.estilodestravado = {
+        'width':'50px',
+        'display':'inline',
+        'border':'1px solid #ccc',
+        'box-shadow': 'inset 0 1px 1px rgba(0,0,0,0.75)',
+        'cursor':'initial',
+        'background-color':'#FFFFFF',
+        'transition': 'border-color ease-in-out .15s,box-shadow ease-in-out .15s'};
 }

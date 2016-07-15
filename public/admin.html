@@ -39,8 +39,8 @@
 
 					<!-- Logo area -->
 					<div class="logo-container">
-						<a href="index.html" title="Knowledge Base Theme">
-							<img src="images/logo.png" alt="Knowledge Base Theme">
+						<a href="admin.html" title="Knowledge Base Theme">
+							<img src="images/logo_admin.png" alt="admin logo">
 						</a>
 						<span class="tag-line">Base de conhecimento</span>
 					</div>
@@ -85,8 +85,14 @@
 
 			<div class="criar-sistema">
 				<h3>Parâmetros</h3>
-				<ul class="list-group" ng-repeat="p in parametros">
-					<li class="list=group-item">{{p.chave}} - {{p.valor}}</ul>
+				<ul class="list-group" >
+					<li class="list=group-item" ng-repeat="p in parametros" ng-click="editarParametro(p)">
+
+						<input type="text" ng-model="p.chave" ng-style="estilotravado" ng-readonly="!soleitura" ng-blur="saiu()">
+						-
+						<input type="text" ng-model="p.valor" ng-style="estilotravado" ng-readonly="!soleitura" ng-blur="saiu()">
+					
+					</li>
 				</ul>
 			</div>
 		</div>
