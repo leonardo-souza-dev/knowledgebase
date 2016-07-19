@@ -155,6 +155,42 @@
 		})
     });
 
+    app.post('/api/gravarouatualizarparametro', function(req, res) {
+		console.log(req.body);
+		console.log('Novo parametro a ser criado. Titulo: ' + req.body.chave);
+		var condicao = { _id: req.body._id }, options = { multi: true };
+		
+		Parametro.findOne(condicao, '_id', function (err, doc) {
+			if (err) return res.send(err);
+
+			if (doc != null && doc._id != null) {
+				
+				Parametro.update(condicao, { 
+					chave: req.body.chave,
+					valor: req.body.valor
+				}, function(err, numAffected) {
+					if (err) console.log(err);
+					console.log('-----------ATUALIZACAO DE PARAMETRO----------');
+					console.log('parametro atualizado! Titulo: ' + req.body.chave);
+					res.json({ sucesso: true, mensagem: "Parametro atualizado!", objeto: { foiInsert: false, numeroRegistrosAfetados: numAffected } });
+				});
+				
+			} else {
+				
+				Parametro.create({ 
+					chave: req.body.chave,
+					valor: req.body.valor
+				}, function(err, data) {
+					if (err) res.send(err);
+					console.log('-----------CRIACAO DE PARAMETRO----------');
+					console.log('Novo parametro CRIADO! Titulo: ' + req.body.chave);
+					res.json({ sucesso: true, mensagem: "Parametro criado!", objeto: { foiInsert: true, artigo: data } });
+				});
+				
+			}
+		})		
+	});
+
 
     // application -------------------------------------------------------------
 

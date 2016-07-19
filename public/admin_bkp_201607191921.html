@@ -22,8 +22,9 @@
 		<link rel="stylesheet" id="main-css-css" href="css/main.css?ver=1.0" type="text/css" media="all">
 		<!-- SPELLS -->
 		<script src="/js/jquery-2.0.3.min.js"></script>
-		<script src="/js/angular/angular.min.js"></script>
+		<script src="/js/angular-1.0.8/angular-1.0.8/angular.min.js"></script>
 		<script src="core_admin.js"></script>
+
 		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 		<!--[if lt IE 9]>
 		<script src="js/html5.js"></script>
@@ -84,25 +85,17 @@
 			</form>
 
 			<div class="criar-sistema">
-				<h3>Parâmetros</h3>
-				<!--
+				<h3>Parâmetrodds</h3>
 				<button ng-focus="count = count + 1" ng-init="count=0">
 				  Increment
 				</button>
 				<span>
 				  count: {{count}}
 				</span>
-				-->
 				<ul class="list-group" >
 					<li class="list=group-item" ng-repeat="p in parametros" >
+						<!-- <input type="text" ng-model="p.chave" ng-style="estilotravado" ng-readonly="!soleitura" ng-click="editarParametro(p)" > --> 
 						
-						<input type="text" ng-model="p.chave" id="pchave" ng-style="estiloPadrao" 
-						ng-readonly="!editavel" ng-click="editarParametro(p)"
-						ng-focus="editarParametro(p)" ng-blur="parouEditarParametro(p)"> =>
-						
-						<input type="text" ng-model="p.valor" id="pvalor" ng-style="estiloPadrao" 
-						ng-readonly="!editavel" ng-click="editarParametro(p)"
-						ng-focus="editarParametro(p)" ng-blur="parouEditarParametro(p)">
 						
 					</li>
 				</ul>

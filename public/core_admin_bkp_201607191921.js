@@ -1,17 +1,19 @@
 // public/core.js
-var estiloEditPadrao = {
-			'background-color': '#FFFFFF',
-			'border': '0px solid #FFF',
-			'padding': '6px 12px'
-		};
-var kbadmin = angular.module("kbadmin", [])
-.controller('principalController', function ($scope, $http) {
-	$http.get("/api/obterparametros")
+var kbadminvar = angular.module("kbadmin", []);
+
+var c = function (text) {
+    console.log("\'" + text + "\'");
+    console.log(text);
+    console.log("");
+};
+
+function principalController($scope, $http) {
+    $http.get("/api/obterparametros")
         .success(function (data) {
             $scope.parametros = data.objeto.parametros;
         })
         .error(function (data) {
-            console.log(data);
+        console.log(data);
         });
 
     $scope.adicionarParametro = function () {
@@ -30,9 +32,9 @@ var kbadmin = angular.module("kbadmin", [])
         $http.post("/api/gravarouatualizarparametro", pParametro)
             .success(function (data) {
                 $scope.artigo = {};
-                //c(data.mensagem); //trocar por algo tipo 'Toast' do Android
-                //lObterUltimosArtigos($http, $scope);
-                //$scope.goDogs = !$scope.goDogs;
+                c(data.mensagem); //trocar por algo tipo 'Toast' do Android
+                lObterUltimosArtigos($http, $scope);
+                $scope.goDogs = !$scope.goDogs;
             }).error(function(data) {
                 console.log(data);
             });
@@ -55,29 +57,22 @@ var kbadmin = angular.module("kbadmin", [])
             console.log(data);
         });
     }
-	
-    $scope.editarParametro = function(pParam) {
-		console.log('editando o parametro de chave ' + pParam.chave);
-		console.log(pParam);
-		if (!$scope.editavel) {
-            $scope.estiloPadrao = {
-			    'background-color': '#FFFFFF',
-			    'border': '1px solid #ccc',
-				'font-size': '14px',
-				'border-radius': '4px',
-				'box-shadow': 'inset 0 1px 1px rgba(0,0,0,0.075)',
-				'transition': 'border-color ease-in-out .15s,box-shadow ease-in-out .15s'
-			};
-		    $scope.editavel = !$scope.editavel;
-		}
+
+    $scope.editarParametro = function(pParametro) {
+        console.log('editandow');
+        $scope.estilotravado = {'background-color': '#FFEEEE'};
     }
-	
-	$scope.estiloPadrao = estiloEditPadrao;
-	
-    $scope.parouEditarParametro = function(pParam) {
-        $scope.estiloPadrao = estiloEditPadrao;
-		$scope.editavel = !$scope.editavel;
-		
-		$scope.gravarOuAtualizarParametro(pParam);
+
+    $scope.parouEditarParametro = function() {
+        console.log('saindo');
+        $scope.estilotravado = {'background-color': 'blue'};
     }
-});
+
+    $scope.aaa = function(par) {
+        console.log('editando www ');
+    }
+
+    $scope.alerto = function(abc) {
+        alerto(abc);
+    }
+}
