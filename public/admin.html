@@ -10,20 +10,25 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Base de Conhecimento - Admin</title>
 		<link rel="shortcut icon" href="images/favicon.png">
-		<!-- Google Web Fonts-->		
+		<!-- Google Web Fonts-->
+		<!--
 		<link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
 		<link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
 		<link href="http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+		-->
+		
 		<!-- Style Sheet-->		
 		<link rel="stylesheet" href="style.css">
 		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<link rel="stylesheet" id="responsive-css-css" href="css/responsive.css?ver=1.0" type="text/css" media="all">
 		<link rel="stylesheet" id="pretty-photo-css-css" href="js/prettyphoto/prettyPhoto.css?ver=3.1.4" type="text/css" media="all">
 		<link rel="stylesheet" id="main-css-css" href="css/main.css?ver=1.0" type="text/css" media="all">
+		
 		<!-- SPELLS -->
 		<script src="/js/jquery-2.0.3.min.js"></script>
 		<script src="/js/angular/angular.min.js"></script>
 		<script src="core_admin.js"></script>
+		
 		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 		<!--[if lt IE 9]>
 		<script src="js/html5.js"></script>
@@ -77,7 +82,7 @@
 				</div>
 				
 				<div class="row">
-					<button type="button" class="btn btn-primary" ng-click="adicionarParametro()">Adicionar parâmetro!</button>
+					<button type="button" class="btn btn-primary" ng-click="adicionarParametroDeSistema()">Adicionar parâmetro de sistema!</button>
 				</div>
 
 				<div id="search-error-container" ng-model="parametro.resultadocriacao" >{{parametro.resultadocriacao}}</div>

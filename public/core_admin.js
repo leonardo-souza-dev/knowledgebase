@@ -4,19 +4,34 @@ var estiloEditPadrao = {
 			'border': '0px solid #FFF',
 			'padding': '6px 12px'
 		};
-var kbadmin = angular.module("kbadmin", [])
-.controller('principalController', function ($scope, $http) {
-	$http.get("/api/obterparametros")
+
+var kbadmin = angular.module("kbadmin", []).controller('principalController', function ($scope, $http) {
+    
+    //console.log('entrou na principalController');
+
+	$http.get("/api/obterParametrosDeSistema")
         .success(function (data) {
+            console.log('**** data.objeto.parametros');
+            console.log(data.objeto.parametros);
             $scope.parametros = data.objeto.parametros;
         })
         .error(function (data) {
+            console.log('ERRO ao obter parametros');
             console.log(data);
         });
 
-    $scope.adicionarParametro = function () {
-        $http.post("/api/adicionarparametro", $scope.parametro)
+    $scope.adicionarParametroDeSistema = function () {
+        $http.post("/api/adicionarparametrodesistema", $scope.parametro)
             .success(function (data) {
+                
+                console.log('------------ $scope.parametros -----------');
+                console.log($scope.parametros);
+                console.log('');
+                
+                console.log('---------- data.objeto.parametro ---------');
+                console.log(data.objeto.parametro);
+                console.log('');
+
                 $scope.parametro = {};
                 $scope.parametro.resultadocriacao = data.mensagem;
                 $scope.parametros.push(data.objeto.parametro);

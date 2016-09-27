@@ -22,23 +22,26 @@ function mainController($scope, $http) {
 	
 	$http.get('/api/obtersistemas')
 		.success(function(data){
+			//console.log('SISTEMAS----');
+			//console.log(data.objeto.sistemas[0]);
+			//console.log('----SISTEMAS');
 			$scope.sistemas = data.objeto.sistemas;
 		}).error(function(data){
 			console.log(data);
 		});
-
-    c('iniciando');
-
-    $http.post('/api/obterparametro', 'nomelogo')
+		
+    $http.post('/api/obterParametroDeSistema', {'chave':'nomelogo'})
         .success(function(data){
-            $scope.nomelogo = data.objeto.nomelogo;
+			//console.log(data);
+            $scope.nomelogo = data.objeto.valor;
         }).error(function(data){
             console.log(data);
         });
 
-    $http.post('/api/obterparametro', 'nomecia')
+    $http.post('/api/obterParametroDeSistema', {'chave':'nomecia'})
         .success(function(data){
-            $scope.nomecia = data.objeto.nomecia;
+			console.log(data);
+            $scope.nomecia = data.objeto.valor;
         }).error(function(data){
             console.log(data);
         });
