@@ -5,8 +5,8 @@
   "main": "server.js",
   "author": "Leonardo Serra",
   "dependencies": {
-    "body-parser": "^1.20.2",
-    "express": "^4.19.2",
+    "body-parser": "^1.20.3",
+    "express": "^4.21.0",
     "jsonwebtoken": "^9.0.0",
     "method-override": "^2.3.10",
     "mongoose": "^5.13.20",
